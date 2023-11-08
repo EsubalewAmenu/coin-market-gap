@@ -6,6 +6,6 @@
    "tokens":[
       "BTC",
       "ETH",
-      "AGIX"
+      "singularitynet"
    ]
 }

@@ -4,25 +4,32 @@
 
 def compare_market_price(response):
     data = response.json()
-
     market_pairs = data["data"]["marketPairs"]
-
-    # Initialize variables for the highest and lowest prices
+    
+    MODERATED_COIN_THRESHOLD = 0.5
     highest_price = None
     lowest_price = None
+    gap = None
 
-    for market_pair in market_pairs:
-        price = market_pair["price"]
 
-        # Check if this is the first price encountered or if it's higher/lower than the current highest/lowest
-        if highest_price is None or price > highest_price:
-            highest_price = price
-        if lowest_price is None or price < lowest_price:
-            lowest_price = price
+    i = 0 
+    while i <= len(market_pairs):
+        if market_pairs[i]["marketReputation"] >= MODERATED_COIN_THRESHOLD:
+            highest_price = market_pairs[i]
+            break
+        i += 1
     
-    gap = highest_price - lowest_price
-    result = {"Gap": gap, "Highest Price": highest_price,"Lowest Price": lowest_price}
+    i = len(market_pairs) - 1
+    while i >= 0:
+        if market_pairs[i]["marketReputation"] <= MODERATED_COIN_THRESHOLD:
+            lowest_price = market_pairs[i]
+            break
+        i -= 1
+  
+    if highest_price and lowest_price:
+        gap = highest_price["price"] - lowest_price["price"]
 
+    result = {"Gap": gap, "Highest Price": highest_price["price"], "high at":highest_price["exchangeName"],"low at":lowest_price["exchangeName"], "Lowest Price": lowest_price["price"], }
     print(result)
 
     return result
