@@ -28,7 +28,7 @@ def compare_market_price(response):
     if highest_price and lowest_price:
         gap = highest_price["price"] - lowest_price["price"]
 
-    result = {"Gap": gap, "Highest Price": highest_price["price"], "high at":highest_price["exchangeName"],"low at":lowest_price["exchangeName"], "Lowest Price": lowest_price["price"], }
+    result = {"token": highest_price['baseSymbol'], "Gap": gap, "Highest": highest_price["price"], "high_at":highest_price["exchangeName"],"low_at":lowest_price["exchangeName"], "Lowest": lowest_price["price"], }
     # print(result)
 
     return result
