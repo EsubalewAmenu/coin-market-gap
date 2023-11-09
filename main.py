@@ -1,6 +1,6 @@
-
-#
+from compare_markets_price import compare_market_price
 from token_market_data import scrap_token
 
-list_of_market = scrap_token()
-# print(list_of_market)
+
+data = scrap_token("singularitynet")
+compare_market_price(data)

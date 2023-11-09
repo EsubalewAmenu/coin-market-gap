@@ -1,39 +1,24 @@
-from bs4 import BeautifulSoup
 import requests
-import time
-import certifi
+import json
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+# get exchange, price, Confidence & last updated were paired with USDT
 
 
-# https://coinmarketcap.com/currencies/singularitynet/#Markets
+def scrap_token(slug):
+    base_url = f'https://api.coinmarketcap.com/data-api/v3/cryptocurrency/market-pairs/latest?slug={slug}'
+    start = 1
+    quoteCurrencyId = 825
+    limit = 100
+    others = 'category=spot&centerType=all&sort=price&direction=desc&spotUntracked=true'
 
-# scrap exchange, price, Confidence & last updated were paired with USDT
+    url = f'{base_url}&start={start}&quoteCurrencyId={quoteCurrencyId}&limit={limit}&{others}'
+    response = requests.get(url)
 
+    if response.status_code == 200:
+        return response
+    else:
+        raise Exception(f'Something went wrong: {response.status_code}')
 
-def scrap_token():
-
-    url = 'https://coinmarketcap.com/currencies/singularitynet/#Markets'
-    
-    options = Options()
-    options.add_argument("--incognito")
-
-    driver = webdriver.Chrome(options=options)
-    driver.get(url)
-    time.sleep(4) # wait for the page to load
-    soup = BeautifulSoup(driver.page_source, "html.parser")
-    
-    market_list = soup.find("div", {"id": "section-coin-markets"})
-
-    for crumb in market_list.find_all("span"):
-        print(crumb.text)
-        # category_names.append(crumb.text)
-            
-    return market_list
 
 # [
 #     {
