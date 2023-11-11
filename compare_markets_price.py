@@ -12,15 +12,17 @@ def compare_market_price(response):
     gap = None
 
     i = 0 
-    while i <= len(market_pairs):
-        if market_pairs[i]["marketReputation"] >= MODERATED_COIN_THRESHOLD:
+    while i <= len(market_pairs) -1:
+        is_passed = check_point(market_pairs[i],["volumeUsd","volumePercent","depthUsdNegativeTwo","depthUsdPositiveTwo"] )
+        if market_pairs[i]["marketReputation"] >= MODERATED_COIN_THRESHOLD and is_passed:
             highest_price = market_pairs[i]
             break
         i += 1
     
     i = len(market_pairs) - 1
     while i >= 0:
-        if market_pairs[i]["marketReputation"] >= MODERATED_COIN_THRESHOLD:
+        is_passed = check_point(market_pairs[i],["volumeUsd","volumePercent","depthUsdNegativeTwo","depthUsdPositiveTwo"] )
+        if market_pairs[i]["marketReputation"] >= MODERATED_COIN_THRESHOLD and is_passed:
             lowest_price = market_pairs[i]
             break
         i -= 1
@@ -32,3 +34,15 @@ def compare_market_price(response):
     # print(result)
 
     return result
+
+def check_point(market_pair,param):
+    for i in param:
+        # print(f'{market_pair["exchangeName"]} {i} :- {market_pair[i]}')
+
+        if i == "volumeUsd" and market_pair[i] < 1000: # check if the volume in 24hr is less than 1000 
+            return False
+
+        if  market_pair[i] <= 0:
+            return False
+
+    return True
