@@ -8,7 +8,7 @@ def scrap_token(slug):
     base_url = f'https://api.coinmarketcap.com/data-api/v3/cryptocurrency/market-pairs/latest?slug={slug}'
     start = 1
     quoteCurrencyId = 825
-    limit = 100
+    limit = 265
     others = 'category=spot&centerType=all&sort=price&direction=desc&spotUntracked=true'
 
     url = f'{base_url}&start={start}&quoteCurrencyId={quoteCurrencyId}&limit={limit}&{others}'

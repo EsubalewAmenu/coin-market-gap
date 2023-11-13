@@ -1,0 +1,1 @@
+['bitcoin', 'ethereum', 'tether', 'bnb', 'xrp', 'solana', 'usd-coin', 'cardano', 'dogecoin', 'tron']

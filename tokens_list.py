@@ -4,7 +4,8 @@
 token_list = [
    "casper",
    "1inch",
-   "singularitynet"
+   "singularitynet",
+   "bnb"
 ]
 
 

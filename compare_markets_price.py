@@ -42,6 +42,9 @@ def check_point(market_pair,param):
         if i == "volumeUsd" and market_pair[i] < 1000: # check if the volume in 24hr is less than 1000 
             return False
 
+        if (i == "depthUsdNegativeTwo" and market_pair[i] < 100) or (i == "depthUsdPositiveTwo" and market_pair[i] < 100):
+            return False
+
         if  market_pair[i] <= 0:
             return False
 
